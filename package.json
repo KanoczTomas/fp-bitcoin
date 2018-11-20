@@ -1,0 +1,33 @@
+{
+  "name": "fp-bitcoin",
+  "version": "1.0.0",
+  "description": "playground for functional programming on bitcoin",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KanoczTomas/fp-bitcoin.git"
+  },
+  "keywords": [
+    "functional",
+    "programming",
+    "bitcoin",
+    "p2p"
+  ],
+  "author": "Tomas Kanocz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KanoczTomas/fp-bitcoin/issues"
+  },
+  "homepage": "https://github.com/KanoczTomas/fp-bitcoin#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "int64-buffer": "^0.99.1007",
+    "sanctuary": "^0.15.0"
+  }
+}
