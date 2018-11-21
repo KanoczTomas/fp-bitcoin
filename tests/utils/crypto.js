@@ -4,6 +4,12 @@ const crypto = require('../../utils/crypto')
 
 describe('Hash function tests:', () => {
   describe('ripemd160:', () => {
+    it('should take a String or Buffer as input', () => {
+      should.not.throw(() => crypto.ripemd160(Buffer.from([35])));
+      should.not.throw(() => crypto.ripemd160('test'));
+      should.throw(() => crypto.ripemd160(), 'Data must be a string or a buffer');
+      should.throw(() => crypto.ripemd160({}), 'Data must be a string or a buffer');
+    });
     it('should return a buffer', () => {
       Buffer.isBuffer(crypto.ripemd160('test')).should.be.true;
     });
@@ -18,6 +24,15 @@ describe('Hash function tests:', () => {
     });
   });
   describe('sha256:', () => {
+    it('should take a String or Buffer as input', () => {
+      should.not.throw(() => crypto.sha256(Buffer.from([35])));
+      should.not.throw(() => crypto.sha256('test'));
+      should.throw(() => crypto.sha256(), 'Data must be a string or a buffer');
+      should.throw(() => crypto.sha256({}), 'Data must be a string or a buffer');
+    });
+    it('should return a buffer', () => {
+      Buffer.isBuffer(crypto.sha256('test')).should.be.true;
+    });
     it('This is a test => c7be1ed902fb8dd4d48997c6452f5d7e509fbcdbe2808b16bcf4edce4c07d14e', () => {
       crypto.sha256('This is a test').toString('hex').should.be.equal('c7be1ed902fb8dd4d48997c6452f5d7e509fbcdbe2808b16bcf4edce4c07d14e');
     });
@@ -29,6 +44,15 @@ describe('Hash function tests:', () => {
     });
   });
   describe('hash160 = ripemd160(sha256(buff)):', () => {
+    it('should take a String or Buffer as input', () => {
+      should.not.throw(() => crypto.hash160(Buffer.from([35])));
+      should.not.throw(() => crypto.hash160('test'));
+      should.throw(() => crypto.hash160(), 'Data must be a string or a buffer');
+      should.throw(() => crypto.hash160({}), 'Data must be a string or a buffer');
+    });
+    it('should return a buffer', () => {
+      Buffer.isBuffer(crypto.hash160('test')).should.be.true;
+    });
     it('This is a test => 18ac98fa2a2412ddb75de60459b52acd98f2d972', () => {
       crypto.hash160('This is a test').toString('hex').should.be.equal('18ac98fa2a2412ddb75de60459b52acd98f2d972');
     });
@@ -40,6 +64,15 @@ describe('Hash function tests:', () => {
     });
   });
   describe('hash256 = sha256(sha256(buff)):', () => {
+    it('should take a String or Buffer as input', () => {
+      should.not.throw(() => crypto.hash256(Buffer.from([35])));
+      should.not.throw(() => crypto.hash256('test'));
+      should.throw(() => crypto.hash256(), 'Data must be a string or a buffer');
+      should.throw(() => crypto.hash256({}), 'Data must be a string or a buffer');
+    });
+    it('should return a buffer', () => {
+      Buffer.isBuffer(crypto.hash256('test')).should.be.true;
+    });
     it('This is a test => eac649d431aa3fc2d5749d1a5021bba7812ec83b8a59fa840bff75c17f8a665c', () => {
       crypto.hash256('This is a test').toString('hex').should.be.equal('eac649d431aa3fc2d5749d1a5021bba7812ec83b8a59fa840bff75c17f8a665c');
     });

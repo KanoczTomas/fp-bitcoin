@@ -4,6 +4,10 @@ const utils = require('../../utils/bitcoin_p2p')
 
 describe('P2P protocol tests:', () => {
   describe('Magic numbers tests:', () => {
+    it('should take a String as input', () => {
+      should.not.throw(() => utils.magic('main'));
+      should.throw(() => utils.magic(13), 'second argument should be a String!');
+    });
     it('should return a buffer', () => {
       Buffer.isBuffer(utils.magic('main')).should.be.true;
       Buffer.isBuffer(utils.magic('testnet')).should.be.true;
@@ -20,6 +24,12 @@ describe('P2P protocol tests:', () => {
     });
   });
   describe('checksum tests:', () => {
+    it('should take a String or Buffer as input', () => {
+      should.not.throw(() => utils.checksum(Buffer.from([35])));
+      should.not.throw(() => utils.checksum('test'));
+      should.throw(() => utils.checksum(13), 'Data must be a string or a buffer');
+      should.throw(() => utils.checksum(), 'Data must be a string or a buffer');
+    });
     it('should return a buffer', () => {
       Buffer.isBuffer(utils.checksum('This is a test')).should.be.true;
     });
@@ -34,6 +44,10 @@ describe('P2P protocol tests:', () => {
     });
   });
   describe('command tests:', () => {
+    it('should take a String as input', () => {
+      should.not.throw(() => utils.command('version'));
+      should.throw(() => utils.command(13), 'first argument should be a String!');
+    });
     it('should return a buffer', () => {
       Buffer.isBuffer(utils.command('version')).should.be.true;
     });
@@ -48,6 +62,15 @@ describe('P2P protocol tests:', () => {
     });
   });
   describe('varInt tests:', () => {
+    it('should take a FiniteNumber > 0 as input', () => {
+      should.not.throw(() => utils.varInt(13));
+      should.throw(() => utils.varInt(Infinity), 'first argument should be a FiniteNumber > 0!');
+      should.throw(() => utils.varInt(-Infinity), 'first argument should be a FiniteNumber > 0!');
+      should.throw(() => utils.varInt(0), 'first argument should be a FiniteNumber > 0!');
+      should.throw(() => utils.varInt(-0), 'first argument should be a FiniteNumber > 0!');
+      should.throw(() => utils.varInt(NaN), 'first argument should be a FiniteNumber > 0!');
+      should.throw(() => utils.varInt(-5), 'first argument should be a FiniteNumber > 0!');
+    });
     it('should return a buffer', () => {
       Buffer.isBuffer(utils.varInt(53)).should.be.true;
     });

@@ -2,6 +2,7 @@
 const S = require('sanctuary');
 const crypto = require('./crypto');
 const Uint64LE = require('int64-buffer').Uint64LE;
+const assert = require('assert');
 //https://en.bitcoin.it/wiki/Protocol_documentation#Common_structures
 
 //magicNumbers:: StrMap (Array)
@@ -13,6 +14,8 @@ const magicNumbers = {
 
 //getMagic :: StrMap -> String -> Buffer
 const getMagic = magicNumbers => network => {
+  assert(typeof magicNumbers === 'object', 'first argument should be an Object!');
+  assert(typeof network === 'string', 'second argument should be a String!');
   const xs = S.pipe([S.prop(network), S.reverse]) (magicNumbers);
   return Buffer.from(xs);
 };
@@ -30,14 +33,24 @@ const checksum = payload => {
 
 //command:: String -> Buffer
 const command = commandName => {
+  assert(typeof commandName === 'string', 'first argument should be a String!');
   const char12Buffer = Buffer.allocUnsafe(12).fill(0);
   Buffer.from(commandName).copy(char12Buffer);
   return char12Buffer;
 };
 
-//varInt :: Buffer -> Buffer
+//varInt :: FiniteNumber -> Buffer
 const varInt = length => {
   //returns variable int encoded length of payload
+  assert(
+    length !== Infinity &&
+    length !== -Infinity &&
+    length !== 0 &&
+    length !== -0 &&
+    isNaN(length) === false &&
+    length > 0
+    ,'first argument should be a FiniteNumber > 0!'
+  );
   let out ;
   if(length <= 0xFC){
     const buf = Buffer.allocUnsafe(1);
